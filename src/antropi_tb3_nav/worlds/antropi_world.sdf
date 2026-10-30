@@ -1,0 +1,119 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="antropi_world">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="gz-sim-physics-system" name="gz::sim::systems::Physics"/>
+    <plugin filename="gz-sim-user-commands-system" name="gz::sim::systems::UserCommands"/>
+    <plugin filename="gz-sim-scene-broadcaster-system" name="gz::sim::systems::SceneBroadcaster"/>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+    <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"/>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground">
+      <static>true</static>
+      <link name="link">
+        <collision name="c"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry></collision>
+        <visual name="v"><geometry><plane><normal>0 0 1</normal><size>30 30</size></plane></geometry>
+          <material><ambient>0.9 0.9 0.85 1</ambient><diffuse>0.9 0.9 0.85 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <!-- Hall x:[-6,6], y:[-5,5]. Rooms are 3x3 in each corner, doors are 1.2 m wide. Walls are 1.5 m tall. -->
+    <model name="walls">
+      <static>true</static>
+      <link name="link">
+
+        <!-- Outer walls -->
+        <collision name="north_c"><pose>0 5 0.75 0 0 0</pose><geometry><box><size>12.15 0.15 1.5</size></box></geometry></collision>
+        <visual name="north_v"><pose>0 5 0.75 0 0 0</pose><geometry><box><size>12.15 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="south_c"><pose>0 -5 0.75 0 0 0</pose><geometry><box><size>12.15 0.15 1.5</size></box></geometry></collision>
+        <visual name="south_v"><pose>0 -5 0.75 0 0 0</pose><geometry><box><size>12.15 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="west_c"><pose>-6 0 0.75 0 0 0</pose><geometry><box><size>0.15 10 1.5</size></box></geometry></collision>
+        <visual name="west_v"><pose>-6 0 0.75 0 0 0</pose><geometry><box><size>0.15 10 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="east_c"><pose>6 0 0.75 0 0 0</pose><geometry><box><size>0.15 10 1.5</size></box></geometry></collision>
+        <visual name="east_v"><pose>6 0 0.75 0 0 0</pose><geometry><box><size>0.15 10 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+
+        <!-- NE room (door gap x: 3.9 to 5.1 on y=2) -->
+        <collision name="ne_h1_c"><pose>3.45 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="ne_h1_v"><pose>3.45 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="ne_h2_c"><pose>5.55 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="ne_h2_v"><pose>5.55 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="ne_v_c"><pose>3 3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry></collision>
+        <visual name="ne_v_v"><pose>3 3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+
+        <!-- NW room (door gap x: -5.1 to -3.9 on y=2) -->
+        <collision name="nw_h1_c"><pose>-3.45 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="nw_h1_v"><pose>-3.45 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="nw_h2_c"><pose>-5.55 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="nw_h2_v"><pose>-5.55 2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="nw_v_c"><pose>-3 3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry></collision>
+        <visual name="nw_v_v"><pose>-3 3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+
+        <!-- SE room (door gap x: 3.9 to 5.1 on y=-2) -->
+        <collision name="se_h1_c"><pose>3.45 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="se_h1_v"><pose>3.45 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="se_h2_c"><pose>5.55 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="se_h2_v"><pose>5.55 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="se_v_c"><pose>3 -3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry></collision>
+        <visual name="se_v_v"><pose>3 -3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+
+        <!-- SW room (door gap x: -5.1 to -3.9 on y=-2) -->
+        <collision name="sw_h1_c"><pose>-3.45 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="sw_h1_v"><pose>-3.45 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="sw_h2_c"><pose>-5.55 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry></collision>
+        <visual name="sw_h2_v"><pose>-5.55 -2 0.75 0 0 0</pose><geometry><box><size>0.9 0.15 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+        <collision name="sw_v_c"><pose>-3 -3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry></collision>
+        <visual name="sw_v_v"><pose>-3 -3.5 0.75 0 0 0</pose><geometry><box><size>0.15 3 1.5</size></box></geometry><material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material></visual>
+
+      </link>
+    </model>
+
+    <model name="obstacles">
+      <static>true</static>
+      <link name="link">
+
+        <!-- Cylinder, centre of hall -->
+        <collision name="o1_c"><pose>0 0 0.25 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="o1_v"><pose>0 0 0.25 0 0 0</pose><geometry><cylinder><radius>0.3</radius><length>0.5</length></cylinder></geometry><material><ambient>0.2 0.4 0.8 1</ambient><diffuse>0.2 0.4 0.8 1</diffuse></material></visual>
+
+        <!-- Box, centre-left -->
+        <collision name="o2_c"><pose>-1.5 1.2 0.25 0 0 0</pose><geometry><box><size>0.8 0.5 0.5</size></box></geometry></collision>
+        <visual name="o2_v"><pose>-1.5 1.2 0.25 0 0 0</pose><geometry><box><size>0.8 0.5 0.5</size></box></geometry><material><ambient>0.8 0.3 0.2 1</ambient><diffuse>0.8 0.3 0.2 1</diffuse></material></visual>
+
+        <!-- Large box, centre-right -->
+        <collision name="o3_c"><pose>1.5 -1.0 0.25 0 0 0</pose><geometry><box><size>1.0 0.6 0.5</size></box></geometry></collision>
+        <visual name="o3_v"><pose>1.5 -1.0 0.25 0 0 0</pose><geometry><box><size>1.0 0.6 0.5</size></box></geometry><material><ambient>0.8 0.3 0.2 1</ambient><diffuse>0.8 0.3 0.2 1</diffuse></material></visual>
+
+        <!-- Cylinder, top corridor -->
+        <collision name="o4_c"><pose>-1.0 3.5 0.25 0 0 0</pose><geometry><cylinder><radius>0.25</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="o4_v"><pose>-1.0 3.5 0.25 0 0 0</pose><geometry><cylinder><radius>0.25</radius><length>0.5</length></cylinder></geometry><material><ambient>0.2 0.4 0.8 1</ambient><diffuse>0.2 0.4 0.8 1</diffuse></material></visual>
+
+        <!-- Small box, bottom corridor -->
+        <collision name="o5_c"><pose>1.0 -3.5 0.25 0 0 0</pose><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="o5_v"><pose>1.0 -3.5 0.25 0 0 0</pose><geometry><box><size>0.5 0.5 0.5</size></box></geometry><material><ambient>0.8 0.3 0.2 1</ambient><diffuse>0.8 0.3 0.2 1</diffuse></material></visual>
+
+        <!-- Box, east side of the middle band -->
+        <collision name="o6_c"><pose>4.5 0.5 0.25 0 0 0</pose><geometry><box><size>0.8 0.4 0.5</size></box></geometry></collision>
+        <visual name="o6_v"><pose>4.5 0.5 0.25 0 0 0</pose><geometry><box><size>0.8 0.4 0.5</size></box></geometry><material><ambient>0.8 0.3 0.2 1</ambient><diffuse>0.8 0.3 0.2 1</diffuse></material></visual>
+
+        <!-- Box inside NW room -->
+        <collision name="o7_c"><pose>-4.5 3.5 0.25 0 0 0</pose><geometry><box><size>0.5 0.5 0.5</size></box></geometry></collision>
+        <visual name="o7_v"><pose>-4.5 3.5 0.25 0 0 0</pose><geometry><box><size>0.5 0.5 0.5</size></box></geometry><material><ambient>0.8 0.3 0.2 1</ambient><diffuse>0.8 0.3 0.2 1</diffuse></material></visual>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>
