@@ -4,7 +4,7 @@ Autonomous navigation of a TurtleBot3 Waffle in a custom Gazebo Sim environment 
 
 Built for the **Robotics Software Intern assignment at Antropi Robotics**.
 
-> **Demo video:** [Watch the autonomous navigation demo](https://drive.google.com/file/d/1_7MM6sHtNj-F3Y7anhLm-DLaoCvMw8we/view?usp=sharing)
+> **Demo video:** [Watch the autonomous navigation demo](https://drive.google.com/file/d/1mE8lElqcWw7Jmwgwrmn7jkd5z81pPbt0/view?usp=drivesdk)
 
 ---
 
@@ -332,7 +332,7 @@ Room entrances and obstacle gaps had to provide enough clearance for the TurtleB
 
 ## Demo
 
-**Demo video:** [Watch the autonomous navigation demo](https://drive.google.com/file/d/1_7MM6sHtNj-F3Y7anhLm-DLaoCvMw8we/view?usp=sharing)
+**Demo video:** [Watch the autonomous navigation demo](https://drive.google.com/file/d/1mE8lElqcWw7Jmwgwrmn7jkd5z81pPbt0/view?usp=drivesdk)
 
 The demonstration shows the TurtleBot3 navigating autonomously through the custom environment while using Nav2 for planning, control, localization, and obstacle avoidance.
 
